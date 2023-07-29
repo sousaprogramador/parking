@@ -1,4 +1,4 @@
-import { User, UserId, UserProperties } from './user';
+import { User, UserId, UserProperties } from '../user';
 import { omit } from 'lodash';
 describe('User Unit Tests', () => {
   test('constructor of User', () => {

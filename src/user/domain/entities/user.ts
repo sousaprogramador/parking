@@ -2,6 +2,7 @@ import UniqueEntityId from '../../../@seedwork/domain/value-objects/unique-entit
 import AggregateRoot from '../../../@seedwork/domain/entity/aggregate-root';
 import UserValidatorFactory from '../validators/user.validator';
 import { EntityValidationError } from '../../../@seedwork/domain';
+import { UserFakeBuilder } from './user-fake-builder';
 
 export type UserProperties = {
   name: string;
@@ -94,6 +95,10 @@ export class User extends AggregateRoot<UserId, UserProperties, UserPropsJson> {
 
   get created_at() {
     return this.props.created_at;
+  }
+
+  static fake() {
+    return UserFakeBuilder;
   }
 
   toJSON(): Required<{ id: string } & UserProperties> {
