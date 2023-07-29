@@ -10,6 +10,6 @@ module.exports = {
   migrations: ['dist/**/infra/typeorm/migration/*.js'],
   cli: {
     entitiesDir: 'src',
-    migrationsDir: 'src/migration',
+    migrationsDir: 'src/**/infra/typeorm/migration',
   },
 };
