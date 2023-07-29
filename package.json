@@ -74,6 +74,10 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "<rootDir>/@seedwork/domain/tests/validations.ts",
+      "<rootDir>/@seedwork/domain/tests/jest.ts"
+    ],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/$1"
     }
