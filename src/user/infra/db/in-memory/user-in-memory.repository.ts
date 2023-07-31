@@ -1,12 +1,12 @@
 import { InMemorySearchableRepository } from '@/@seedwork/domain';
 import { SortDirection } from '@/@seedwork/domain';
-import { User, UserId, UserRepository } from '@/user/domain';
+import { User, UserId, UserRepository } from '../../../domain';
 
 export class UserInMemoryRepository
   extends InMemorySearchableRepository<User, UserId, UserRepository.Filter>
   implements UserRepository.Repository
 {
-  sortableFields: string[] = ['name', 'email'];
+  sortableFields: string[] = ['name', 'email', 'created_at'];
 
   protected async applyFilter(
     items: User[],
@@ -17,14 +17,14 @@ export class UserInMemoryRepository
     }
 
     return items.filter((i) => {
-      const hasUserName =
+      const hasName =
         filter.name &&
         i.props.name.toLowerCase().includes(filter.name.toLowerCase());
       const hasEmail =
         filter.email &&
-        i.props.email.toString().includes(filter.email.toString());
+        i.props.email.toLowerCase().includes(filter.email.toLowerCase());
 
-      return hasEmail || hasUserName;
+      return hasName || hasEmail;
     });
   }
 
