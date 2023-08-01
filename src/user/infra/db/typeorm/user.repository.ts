@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { UserEntity } from './user.entity';
+import { UserEntity } from './entities/user.entity';
 import { UserModelMapper } from './user-mapper';
 import {
   UserRepository as UserRepositoryContract,

@@ -1,11 +1,11 @@
 import { DataSource } from 'typeorm';
-import { configDB } from './data-source';
+import { config } from './data-source';
 
 export const databaseProviders = [
   {
     provide: 'DATA_SOURCE',
     useFactory: async () => {
-      const dataSource = new DataSource(configDB);
+      const dataSource = new DataSource(config);
 
       return dataSource.initialize();
     },

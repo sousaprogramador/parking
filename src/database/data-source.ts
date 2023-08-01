@@ -1,9 +1,9 @@
 require('dotenv/config');
 import 'reflect-metadata';
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { UserEntity } from '@/user/infra/db/typeorm/user.entity';
+import { UserEntity } from '../user/infra/db/typeorm/entities/user.entity';
 
-export const configDB = {
+export const config = {
   type: 'mysql',
   host: process.env.DB_HOST,
   port: +process.env.DB_PORT,
@@ -17,4 +17,4 @@ export const configDB = {
   subscribers: [],
 } as DataSourceOptions;
 
-export const AppDataSource = new DataSource(configDB);
+export const AppDataSource = new DataSource(config);
