@@ -16,7 +16,7 @@ export namespace USER_PROVIDERS {
     };
 
     export const USER_REPOSITORY = {
-      provide: 'DATA_SOURCE',
+      provide: 'USER_REPOSITORY',
       useExisting: 'USER_REPOSITORY',
     };
   }
@@ -27,7 +27,7 @@ export namespace USER_PROVIDERS {
       useFactory: (userRepo: UserRepository.Repository) => {
         return new GetUserUseCase.UseCase(userRepo);
       },
-      inject: ['USER_REPOSITORY'],
+      inject: [REPOSITORIES.USER_REPOSITORY.provide],
     };
   }
 }
