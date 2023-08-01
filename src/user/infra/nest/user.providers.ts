@@ -1,11 +1,33 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 import { DataSource } from 'typeorm';
 import { UserEntity } from '../typeorm/user.entity';
+import { UserRepository } from '../../domain';
+import { UserRepository as UserTypeOrmRepository } from '../typeorm/user.repository';
+import GetUserUseCase from '../../application/use-cases/get-user.use-case';
 
-export const userProviders = [
-  {
-    provide: 'USER_REPOSITORY',
-    useFactory: (dataSource: DataSource) =>
-      dataSource.getRepository(UserEntity),
-    inject: ['DATA_SOURCE'],
-  },
-];
+export namespace USER_PROVIDERS {
+  export namespace REPOSITORIES {
+    export const USER_SEQUELIZE_REPOSITORY = {
+      provide: 'USER_REPOSITORY',
+      useFactory: (dataSource: DataSource) => {
+        return new UserTypeOrmRepository(dataSource.getRepository(UserEntity));
+      },
+      inject: ['DATA_SOURCE'],
+    };
+
+    export const USER_REPOSITORY = {
+      provide: 'DATA_SOURCE',
+      useExisting: 'USER_REPOSITORY',
+    };
+  }
+
+  export namespace USE_CASES {
+    export const GET_USER_USE_CASE = {
+      provide: GetUserUseCase.UseCase,
+      useFactory: (userRepo: UserRepository.Repository) => {
+        return new GetUserUseCase.UseCase(userRepo);
+      },
+      inject: ['USER_REPOSITORY'],
+    };
+  }
+}
