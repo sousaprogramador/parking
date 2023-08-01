@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { UserEntity } from '@/user/infra/db/typeorm/user.entity';
 
-export const config = {
+export const configDB = {
   type: 'mysql',
   host: process.env.DB_HOST,
   port: +process.env.DB_PORT,
@@ -17,4 +17,4 @@ export const config = {
   subscribers: [],
 } as DataSourceOptions;
 
-export const AppDataSource = new DataSource(config);
+export const AppDataSource = new DataSource(configDB);

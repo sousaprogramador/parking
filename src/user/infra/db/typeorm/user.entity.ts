@@ -1,16 +1,16 @@
 import {
   Column,
   Entity,
-  PrimaryGeneratedColumn,
   Unique,
   DeleteDateColumn,
+  PrimaryColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
 @Entity('users')
 @Unique(['email'])
 export class UserEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn('uuid')
   id: string;
 
   @Column({ nullable: false })
