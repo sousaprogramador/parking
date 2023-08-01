@@ -3,14 +3,16 @@ import {
   Entity,
   Unique,
   DeleteDateColumn,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
 @Entity('users')
 @Unique(['email'])
 export class UserEntity {
-  @PrimaryColumn('uuid')
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ nullable: false })
@@ -18,9 +20,6 @@ export class UserEntity {
 
   @Column({ nullable: false })
   email: string;
-
-  @Column({ nullable: false })
-  profile: string;
 
   @Exclude()
   @Column({ nullable: false })
@@ -32,10 +31,10 @@ export class UserEntity {
   @Column({ default: true })
   is_active: boolean;
 
-  @Column()
+  @CreateDateColumn()
   created_at: Date;
 
-  @Column()
+  @UpdateDateColumn()
   updated_at: Date;
 
   @DeleteDateColumn({ name: 'deleted_at' })

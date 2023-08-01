@@ -11,7 +11,7 @@ export const databaseProviders = [
         username: 'root',
         password: 'root',
         database: 'parking',
-        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+        entities: [__dirname + '/../**/typeorm/*.entity{.ts,.js}'],
         synchronize: true,
       });
 
