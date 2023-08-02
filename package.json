@@ -80,6 +80,10 @@
          "**/*.(t|j)s"
       ],
       "coverageDirectory": "../coverage",
-      "testEnvironment": "node"
+      "testEnvironment": "node",
+      "setupFilesAfterEnv": [
+         "<rootDir>/common/domain/tests/validations.ts",
+         "<rootDir>/common/domain/tests/jest.ts"
+       ]
    }
 }
