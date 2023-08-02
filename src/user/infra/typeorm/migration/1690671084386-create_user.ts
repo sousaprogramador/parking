@@ -16,7 +16,7 @@ export class CreateUser1690671084386 implements MigrationInterface {
           { name: 'name', type: 'varchar' },
           { name: 'email', type: 'varchar', isUnique: true },
           { name: 'password', type: 'varchar', isNullable: false },
-          { name: 'avatar', type: 'varchar', isNullable: true },
+          { name: 'avatar', type: 'text', isNullable: true },
           { name: 'is_active', type: 'boolean', default: true },
           { name: 'created_at', type: 'timestamp', default: 'now()' },
           { name: 'updated_at', type: 'timestamp', default: 'now()' },

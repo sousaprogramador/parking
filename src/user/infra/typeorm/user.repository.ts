@@ -19,8 +19,9 @@ export class UserRepository implements UserRepositoryContract.Repository {
     throw new Error('Method not implemented.');
   }
 
-  insert(entity: User): Promise<void> {
-    throw new Error('Method not implemented.');
+  async insert(entity: User): Promise<void> {
+    const user = this.userModel.create(entity);
+    await this.userModel.save(user);
   }
 
   bulkInsert(entities: User[]): Promise<void> {

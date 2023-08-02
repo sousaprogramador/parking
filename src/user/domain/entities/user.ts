@@ -1,4 +1,5 @@
 import { AggregateRoot, UniqueEntityId } from '../../../common';
+import { UserFakeBuilder } from './user-fake-builder';
 
 export type UserProperties = {
   name: string;
@@ -91,6 +92,10 @@ export class User extends AggregateRoot<UserId, UserProperties, UserPropsJson> {
 
   get created_at() {
     return this.props.created_at;
+  }
+
+  static fake() {
+    return UserFakeBuilder;
   }
 
   toJSON(): Required<{ id: string } & UserProperties> {

@@ -1,6 +1,7 @@
-import { GetUserUseCase } from '../get-user.use-case';
-import { UserRepository, UserEntity } from '../../../infra/typeorm';
 import { DataSource } from 'typeorm';
+import { GetUserUseCase } from '../get-user.use-case';
+import { User } from '../../../domain';
+import { UserRepository, UserEntity } from '../../../infra/typeorm';
 import { NotFoundError } from '../../../../common';
 import { databaseProviders } from '../../../../database/database.providers';
 
@@ -19,5 +20,21 @@ describe('GetUserUseCase Integration Tests', () => {
     await expect(() => useCase.execute({ id: 'fake id' })).rejects.toThrow(
       new NotFoundError(`Entity Not Found using ID fake id`),
     );
+  });
+
+  it('should returns a user', async () => {
+    const user = User.fake().aUser().build();
+    await repository.insert(user);
+
+    const output = await useCase.execute({ id: user.id });
+    expect(output).toStrictEqual({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      avatar: user.avatar,
+      is_active: user.is_active,
+      created_at: user.created_at,
+    });
   });
 });
