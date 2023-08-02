@@ -6,6 +6,7 @@ import {
   UserId,
 } from '../../domain';
 import { UserModelMapper } from './user-mapper';
+import { NotFoundError } from '../../../common';
 
 export class UserRepository implements UserRepositoryContract.Repository {
   sortableFields: string[] = ['name', 'email'];
@@ -27,8 +28,12 @@ export class UserRepository implements UserRepositoryContract.Repository {
   }
 
   async findById(id: string | UserId): Promise<User> {
-    const user = await this.userModel.findOne({ where: { id: `${id}` } });
-    return UserModelMapper.toEntity(user);
+    try {
+      const user = await this.userModel.findOneByOrFail({ id: `${id}` });
+      return UserModelMapper.toEntity(user);
+    } catch (error) {
+      throw new NotFoundError(`Entity Not Found using ID ${id}`);
+    }
   }
 
   async findAll(): Promise<any> {

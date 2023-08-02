@@ -1,6 +1,7 @@
 import { GetUserUseCase } from '../get-user.use-case';
 import { UserRepository, UserEntity } from '../../../infra/typeorm';
 import { DataSource } from 'typeorm';
+import { NotFoundError } from '../../../../common';
 import { databaseProviders } from '../../../../database/database.providers';
 
 describe('GetUserUseCase Integration Tests', () => {
@@ -14,8 +15,9 @@ describe('GetUserUseCase Integration Tests', () => {
     useCase = new GetUserUseCase.UseCase(repository);
   });
 
-  it('should create a user', async () => {
-    const all = await repository.findAll();
-    console.log('all', all);
+  it('should throws error when entity not found', async () => {
+    await expect(() => useCase.execute({ id: 'fake id' })).rejects.toThrow(
+      new NotFoundError(`Entity Not Found using ID fake id`),
+    );
   });
 });
