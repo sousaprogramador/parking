@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import { UserRepository } from '../../domain';
 import { UserOutput, UserOutputMapper } from '../dto/user-output';
+import { UseCase as DefaultUseCase } from '../../../common';
 
 export namespace GetUserUseCase {
-  export class UseCase {
+  export class UseCase implements DefaultUseCase<Input, Output> {
     constructor(private userRepo: UserRepository.Repository) {}
 
-    async execute(): Promise<any> {
-      const entity = await this.userRepo.findAll();
-      return entity; //UserOutputMapper.toOutput(entity);
+    async execute(input: Input): Promise<any> {
+      const entity = await this.userRepo.findById(input.id);
+      return UserOutputMapper.toOutput(entity);
     }
   }
 

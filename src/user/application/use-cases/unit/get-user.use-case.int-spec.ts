@@ -1,7 +1,7 @@
-import { GetUserUseCase } from './get-user.use-case';
-import { UserRepository, UserEntity } from '../../infra/typeorm';
+import { GetUserUseCase } from '../get-user.use-case';
+import { UserRepository, UserEntity } from '../../../infra/typeorm';
 import { DataSource } from 'typeorm';
-import { databaseProviders } from '../../../database/database.providers';
+import { databaseProviders } from '../../../../database/database.providers';
 
 describe('GetUserUseCase Integration Tests', () => {
   let useCase: GetUserUseCase.UseCase;

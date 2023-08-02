@@ -1,4 +1,12 @@
-import { Inject, Controller, Get, Post, Body } from '@nestjs/common';
+import {
+  Inject,
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { UserEntity } from '../typeorm/user.entity';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -10,9 +18,11 @@ export class UserController {
   @Inject(GetUserUseCase.UseCase)
   private getUseCase: GetUserUseCase.UseCase;
 
-  @Get('')
-  async show(): Promise<any> {
-    return await this.getUseCase.execute();
+  @Get(':id')
+  async show(
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
+  ): Promise<any> {
+    return await this.getUseCase.execute({ id });
   }
 
   @Post()
