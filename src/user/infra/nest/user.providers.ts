@@ -2,7 +2,7 @@
 import { DataSource } from 'typeorm';
 import { UserEntity } from '../typeorm/user.entity';
 import { UserRepository } from '../../domain';
-import { UserRepository as UserTypeOrmRepository } from '../typeorm/user.repository';
+import { UserTypeOrmRepository } from '../typeorm/user.repository';
 import GetUserUseCase from '../../application/use-cases/get-user.use-case';
 
 export namespace USER_PROVIDERS {

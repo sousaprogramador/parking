@@ -8,7 +8,9 @@ import {
 import { UserModelMapper } from './user-mapper';
 import { NotFoundError } from '../../../common';
 
-export class UserRepository implements UserRepositoryContract.Repository {
+export class UserTypeOrmRepository
+  implements UserRepositoryContract.Repository
+{
   sortableFields: string[] = ['name', 'email'];
 
   constructor(private userModel: Repository<UserEntity>) {}
@@ -34,12 +36,18 @@ export class UserRepository implements UserRepositoryContract.Repository {
     return UserModelMapper.toEntity(model);
   }
 
-  async findAll(): Promise<any> {
-    return await this.userModel.find();
+  async findAll(): Promise<User[]> {
+    const models = await this.userModel.find();
+    return models.map((m) => UserModelMapper.toEntity(m));
   }
 
   async update(entity: User): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this._get(entity.id);
+    const users = await this.userModel.preload({
+      id: entity.id,
+      ...entity.toJSON(),
+    });
+    await this.userModel.save(users);
   }
 
   async delete(id: string | UserId): Promise<void> {

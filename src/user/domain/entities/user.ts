@@ -1,4 +1,9 @@
-import { AggregateRoot, UniqueEntityId } from '../../../common';
+import {
+  AggregateRoot,
+  EntityValidationError,
+  UniqueEntityId,
+} from '../../../common';
+import UserValidatorFactory from '../validators/user.validator';
 import { UserFakeBuilder } from './user-fake-builder';
 
 export type UserProperties = {
@@ -27,7 +32,7 @@ export class User extends AggregateRoot<UserId, UserProperties, UserPropsJson> {
   }
 
   update(data: UserProperties): void {
-    //User.validate(data);
+    User.validate(data);
     this.name = data.name;
     this.email = data.email;
     this.avatar = data.avatar ?? null;
@@ -35,11 +40,11 @@ export class User extends AggregateRoot<UserId, UserProperties, UserPropsJson> {
   }
 
   static validate(props: UserProperties) {
-    /*const validator = UserValidatorFactory.create();
+    const validator = UserValidatorFactory.create();
     const isValid = validator.validate(props);
     if (!isValid) {
       throw new EntityValidationError(validator.errors);
-    }*/
+    }
   }
 
   activate() {

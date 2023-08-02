@@ -1,18 +1,20 @@
 import { DataSource } from 'typeorm';
 import { GetUserUseCase } from '../get-user.use-case';
 import { User } from '../../../domain';
-import { UserRepository, UserEntity } from '../../../infra/typeorm';
+import { UserTypeOrmRepository, UserEntity } from '../../../infra/typeorm';
 import { NotFoundError } from '../../../../common';
 import { databaseProviders } from '../../../../database/database.providers';
 
 describe('GetUserUseCase Integration Tests', () => {
   let useCase: GetUserUseCase.UseCase;
-  let repository: UserRepository;
+  let repository: UserTypeOrmRepository;
   let dataSource: DataSource;
 
   beforeEach(async () => {
     dataSource = await databaseProviders[0].useFactory();
-    repository = new UserRepository(dataSource.getRepository(UserEntity));
+    repository = new UserTypeOrmRepository(
+      dataSource.getRepository(UserEntity),
+    );
     useCase = new GetUserUseCase.UseCase(repository);
   });
 

@@ -33,10 +33,4 @@ export class UserEntity {
 
   @CreateDateColumn()
   created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  @DeleteDateColumn({ name: 'deleted_at' })
-  deleted_at: Date | null;
 }
