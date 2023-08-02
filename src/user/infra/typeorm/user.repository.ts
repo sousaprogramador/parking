@@ -28,12 +28,9 @@ export class UserRepository implements UserRepositoryContract.Repository {
   }
 
   async findById(id: string | UserId): Promise<User> {
-    try {
-      const user = await this.userModel.findOneByOrFail({ id: `${id}` });
-      return UserModelMapper.toEntity(user);
-    } catch (error) {
-      throw new NotFoundError(`Entity Not Found using ID ${id}`);
-    }
+    const _id = `${id}`;
+    const model = await this._get(_id);
+    return UserModelMapper.toEntity(model);
   }
 
   async findAll(): Promise<any> {
@@ -46,5 +43,14 @@ export class UserRepository implements UserRepositoryContract.Repository {
 
   async delete(id: string | UserId): Promise<void> {
     await this.userModel.softDelete({ id: `${id}` });
+  }
+
+  private async _get(id: string): Promise<UserEntity> {
+    try {
+      const user = await this.userModel.findOneByOrFail({ id: `${id}` });
+      return user;
+    } catch (error) {
+      throw new NotFoundError(`Entity Not Found using ID ${id}`);
+    }
   }
 }
