@@ -5,6 +5,7 @@ import { UserEntity } from '../user.entity';
 import { User, UserId } from '../../../domain';
 import { NotFoundError } from '../../../../common';
 import { databaseProviders } from '../../../../database/database.providers';
+import { UserRepository } from '../../../domain';
 
 describe('UserSequelizeRepository Unit Tests', () => {
   let repository: UserTypeOrmRepository;
@@ -19,6 +20,7 @@ describe('UserSequelizeRepository Unit Tests', () => {
 
   beforeEach(async () => {
     await dataSource.synchronize();
+    await dataSource.getRepository(UserEntity).clear();
   });
 
   it('should inserts a new entity', async () => {
@@ -122,8 +124,105 @@ describe('UserSequelizeRepository Unit Tests', () => {
     expect(entity.toJSON()).toStrictEqual(entityFound.toJSON());
   });
 
+  it('should throw error on delete when a entity not found', async () => {
+    await expect(repository.delete('fake id')).rejects.toThrow(
+      new NotFoundError('Entity Not Found using ID fake id'),
+    );
+
+    await expect(
+      repository.delete(new UserId('9366b7dc-2d71-4799-b91c-c64adb205104')),
+    ).rejects.toThrow(
+      new NotFoundError(
+        `Entity Not Found using ID 9366b7dc-2d71-4799-b91c-c64adb205104`,
+      ),
+    );
+  });
+
+  it('should delete a entity', async () => {
+    const entity = new User({
+      name: faker.internet.userName(),
+      password: faker.internet.password(),
+      email: faker.internet.email(),
+      is_active: true,
+      created_at: new Date(),
+    });
+    await repository.insert(entity);
+
+    await repository.delete(entity.id);
+
+    await expect(repository.findById(entity.id)).rejects.toThrow(
+      new NotFoundError(`Entity Not Found using ID ${entity.id}`),
+    );
+  });
+
+  it('should apply paginate and filter', async () => {
+    const users = [
+      User.fake()
+        .aUser()
+        .withName('test')
+        .withCreatedAt(new Date(new Date().getTime() + 5000))
+        .build(),
+      User.fake()
+        .aUser()
+        .withName('a')
+        .withCreatedAt(new Date(new Date().getTime() + 4000))
+        .build(),
+      User.fake()
+        .aUser()
+        .withName('TEST')
+        .withCreatedAt(new Date(new Date().getTime() + 3000))
+        .build(),
+      User.fake()
+        .aUser()
+        .withName('TeSt')
+        .withCreatedAt(new Date(new Date().getTime() + 1000))
+        .build(),
+    ];
+
+    await repository.bulkInsert(users);
+
+    let searchOutput = await repository.search(
+      UserRepository.SearchParams.create({
+        page: 1,
+        per_page: 2,
+        filter: { name: 'TEST' },
+      }),
+    );
+
+    console.log('searchOutput', searchOutput);
+    expect(searchOutput.toJSON(true)).toMatchObject(
+      new UserRepository.SearchResult({
+        items: [users[0], users[2]],
+        total: 3,
+        current_page: 1,
+        per_page: 2,
+        sort: null,
+        sort_dir: null,
+        filter: { name: 'TEST' },
+      }).toJSON(true),
+    );
+
+    searchOutput = await repository.search(
+      UserRepository.SearchParams.create({
+        page: 2,
+        per_page: 2,
+        filter: { name: 'TEST' },
+      }),
+    );
+    expect(searchOutput.toJSON(true)).toMatchObject(
+      new UserRepository.SearchResult({
+        items: [users[3]],
+        total: 3,
+        current_page: 2,
+        per_page: 2,
+        sort: null,
+        sort_dir: null,
+        filter: { name: 'TEST' },
+      }).toJSON(true),
+    );
+  });
+
   afterAll(async () => {
-    await dataSource.getRepository(UserEntity).clear();
     await dataSource.destroy();
   });
 });

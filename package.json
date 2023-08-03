@@ -79,6 +79,7 @@
       "collectCoverageFrom": [
          "**/*.(t|j)s"
       ],
+      "clearMocks": true,
       "coverageDirectory": "../coverage",
       "testEnvironment": "node",
       "setupFilesAfterEnv": [
