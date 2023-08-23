@@ -39,4 +39,9 @@ describe('GetUserUseCase Integration Tests', () => {
       created_at: user.created_at,
     });
   });
+
+  afterAll(async () => {
+    jest.restoreAllMocks();
+    dataSource.destroy();
+  });
 });
