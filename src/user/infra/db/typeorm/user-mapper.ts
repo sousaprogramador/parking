@@ -1,7 +1,7 @@
 import { UserEntity } from './user.entity';
-import { User } from '../../domain';
-import { EntityValidationError, LoadEntityError } from '../../../common';
-import { UniqueEntityId } from '../../../common';
+import { User } from '../../../domain';
+import { EntityValidationError, LoadEntityError } from '../../../../common';
+import { UniqueEntityId } from '../../../../common';
 
 export class UserModelMapper {
   static toEntity(model: UserEntity) {

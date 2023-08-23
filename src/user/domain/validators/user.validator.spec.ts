@@ -68,19 +68,5 @@ describe('UserValidator Tests', () => {
         'email must be a string',
       ],
     });
-
-    /*expect({ validator, data: { name: 5 as any } }).containsErrorMessages({
-      name: [
-        'name must be shorter than or equal to 255 characters',
-        'name must be a string',
-      ],
-    });
-
-    expect({
-      validator,
-      data: { name: 't'.repeat(256) },
-    }).containsErrorMessages({
-      name: ['name must be shorter than or equal to 255 characters'],
-    });*/
   });
 });

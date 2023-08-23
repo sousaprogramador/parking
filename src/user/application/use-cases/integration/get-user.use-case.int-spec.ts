@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { GetUserUseCase } from '../get-user.use-case';
 import { User } from '../../../domain';
-import { UserTypeOrmRepository, UserEntity } from '../../../infra/typeorm';
+import { UserTypeOrmRepository, UserEntity } from '../../../infra/db';
 import { NotFoundError } from '../../../../common';
 import { databaseProviders } from '../../../../database/database.providers';
 

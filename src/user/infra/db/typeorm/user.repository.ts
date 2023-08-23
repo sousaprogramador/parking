@@ -1,12 +1,12 @@
-import { Repository, Like, Entity } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import { UserEntity } from './user.entity';
 import {
   UserRepository as UserRepositoryContract,
   User,
   UserId,
-} from '../../domain';
+} from '../../../domain';
 import { UserModelMapper } from './user-mapper';
-import { NotFoundError } from '../../../common';
+import { NotFoundError } from '../../../../common';
 
 export class UserTypeOrmRepository
   implements UserRepositoryContract.Repository
