@@ -29,15 +29,15 @@ export class UserRules {
 
   @IsString()
   @IsOptional()
-  avatar?: string | null;
+  avatar: string | null;
 
   @IsBoolean()
   @IsOptional()
-  is_active?: boolean;
+  is_active: boolean;
 
   @IsDate()
   @IsOptional()
-  created_at?: Date;
+  created_at: Date;
 
   constructor(data: UserProperties) {
     Object.assign(this, data);

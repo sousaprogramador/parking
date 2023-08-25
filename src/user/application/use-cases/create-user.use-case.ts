@@ -8,12 +8,14 @@ export namespace CreateUserUseCase {
     constructor(private userRepo: UserRepository.Repository) {}
 
     async execute(input: Input): Promise<Output> {
-      //let passwordHash = null;
-      //if (input.password) passwordHash = await hash(input.password, 8);
+      const password = await hash(input.password, 8);
 
-      const entity = new User(input);
-      // await this.userRepo.insert(entity);
-      //return UserOutputMapper.toOutput(entity);
+      const entity = new User({
+        ...input,
+        password,
+      });
+      await this.userRepo.insert(entity);
+      return UserOutputMapper.toOutput(entity);
     }
   }
 
