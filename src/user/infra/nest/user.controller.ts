@@ -7,7 +7,7 @@ import {
   Param,
   ParseUUIDPipe,
 } from '@nestjs/common';
-import { UserEntity } from '../typeorm/user.entity';
+import { UserEntity } from '../db';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import GetUserUseCase from '../../application/use-cases/get-user.use-case';

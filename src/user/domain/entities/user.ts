@@ -42,7 +42,6 @@ export class User extends AggregateRoot<UserId, UserProperties, UserPropsJson> {
   static validate(props: UserProperties) {
     const validator = UserValidatorFactory.create();
     const isValid = validator.validate(props);
-    console.log('isValid', isValid);
     if (!isValid) {
       throw new EntityValidationError(validator.errors);
     }

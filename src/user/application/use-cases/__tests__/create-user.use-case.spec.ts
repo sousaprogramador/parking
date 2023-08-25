@@ -1,5 +1,5 @@
 import CreateUserUseCase from '../create-user.use-case';
-import UserInMemoryRepository from '../../../infra/db/in-memory/user-in-memory.repository';
+import { UserInMemoryRepository } from '../../../infra/db';
 import { User } from '../../../domain';
 import { EntityValidationError } from '../../../../common';
 
@@ -43,7 +43,7 @@ describe('CreateUserUseCase Unit Tests', () => {
         id: repository.items[0].id,
         name: 'some company name',
         email: 'mail@basic.com',
-        password: 'some',
+        password: repository.items[0].password,
         is_active: true,
         avatar: null,
         created_at: repository.items[0].created_at,
@@ -59,7 +59,7 @@ describe('CreateUserUseCase Unit Tests', () => {
         id: repository.items[1].id,
         name: 'some company name',
         email: 'mail@basic.com',
-        password: 'some',
+        password: repository.items[1].password,
         is_active: true,
         avatar: null,
         created_at: repository.items[1].created_at,
