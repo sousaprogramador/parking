@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import { DataSource } from 'typeorm';
-import { UserEntity } from '../typeorm/user.entity';
+import { UserEntity } from '../db';
 import { UserRepository } from '../../domain';
-import { UserTypeOrmRepository } from '../typeorm/user.repository';
+import { UserTypeOrmRepository } from '../db';
 import GetUserUseCase from '../../application/use-cases/get-user.use-case';
 
 export namespace USER_PROVIDERS {
